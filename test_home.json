@@ -1,0 +1,12 @@
+{
+  "living_room_light": {
+    "type": "light",
+    "location": "living_room",
+    "state": "off"
+  },
+  "bedroom_light": {
+    "type": "light",
+    "location": "bedroom",
+    "state": "off"
+  }
+}

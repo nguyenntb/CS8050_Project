@@ -1,0 +1,60 @@
+{"Ambient Temperature":
+    {"make it less chilly in here"              : immediate},
+    {"help me cool off"                         : immediate},
+    {"make it less stuffy in here"              : immediate},
+    {"turn the AC off when it’s cold outside"   : persistent},
+    {"turn the heat off when it’s hot outside"  : persistent},
+    {"make it comfortable at night"             : persistent}
+}
+
+{"Ambient Luminance":
+    {"make it less bright"                  : immediate},
+    {"get ready for bed"                    : immediate},
+    {"help me see better"                   : immediate},
+    {"keep it well-lit after sundown"       : persistent},
+    {"use natural light once the sun is up" : persistent},
+    {"keep the lights off when I’m gone"    : persistent}
+}
+
+{"Security":
+    {"check the front door"                 : immediate},
+    {"lock up"                              : immediate},
+    {"let the guest in"                     : immediate},
+    {"lock the door when I leave"           : persistent},
+    {"let me know when there’s a visitor"   : persistent},
+    {"keep the home safe during the day"    : persistent}
+}
+
+{"Energy Saving":
+    {"turn off the thermostat when I don’t need it" : persistent},
+    {"save energy when I’m gone"                    : persistent},
+    {"help me save energy"                          : persistent},
+    {"help me lower my power bill"                  : persistent}
+}
+
+{Ambient Atmosphere":
+    {"set up for a party"                   : immediate},
+    {"make it cozy in here"                 : immediate},
+    {"help me wind down"                    : immediate},
+    {"make it cozy when it rains"           : persistent},
+    {"let me know when the weather is bad"  : persistent},
+    {"help me sleep better"                 : persistent}
+}
+
+{"Robot Control":
+    {"clean up the bedroom"             : immediate},
+    {"stop cleaning"                    : immediate},
+    {"tidy up the house"                : immediate},
+    {"stop cleaning after sunset"       : persistent},
+    {"don’t clean when people are here" : persistent},
+    {"clean up while I’m gone"          : persistent}
+}
+
+{"Other Appliances":
+    {"give me some privacy"                     : immediate},
+    {"let some sun in"                          : immediate},
+    {"finish the coffee"                        : immediate},
+    {"keep it humid at night"                   : persistent},
+    {"I need coffee in the morning"             : persistent},
+    {"let some sun in if the weather is nice"   : persistent}
+}
