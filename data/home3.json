@@ -1,0 +1,115 @@
+{
+    "diningroom": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    },
+
+    "livingroom": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        },
+
+        "lamp": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        },
+
+        "tv": {
+            "type": "tv",
+            "on": false,
+            "channel": 1,
+            "volume": 0
+        },
+
+
+        "thermostat": {
+            "type": "thermostat",
+            "setting": 68
+        },
+
+        "speaker": {
+            "type": "speaker",
+            "on": false,
+            "volume": 0
+        },
+
+        "curtains": {
+            "type": "curtains",
+            "open": false
+        },
+
+        "vacuum": {
+            "type": "vacuum",
+            "on": false
+        }
+
+    },
+
+    "bedroom": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        },
+
+        "humidifier": {
+            "type": "humidifier",
+            "on": false,
+            "humidity": 40
+        }
+    },
+
+    "kitchen": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        },
+        
+        "microwave": {
+            "type": "microwave",
+            "on": false,
+            "time": 0
+        }
+    },
+
+    "hall": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    },
+
+    "entry": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        },
+
+        "lock": {
+            "type": "lock",
+            "locked": true
+        },
+
+        "camera": {
+            "type": "camera",
+            "on": false
+        }
+    },
+
+    "bath": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    }
+}

@@ -1,0 +1,48 @@
+{
+    "global": {
+        "local_time": "18:30",
+        "local_weather": "cloudy",
+        "user_location": "home"
+    },
+
+    "rooms": {
+
+        "diningroom": {
+            "area_motion": false
+        },
+
+        "livingroom": {
+            "area_motion": false,
+            "couch_motion": false,
+            "temperature": 22.0,
+            "luminosity": 40.0
+        },
+
+        "bedroom": {
+            "area_motion": false,
+            "bed_motion": false,
+            "luminosity": 30.0
+        },
+
+        "bath": {
+            "area_motion": false,
+            "temperature": 23.0
+        },
+
+        "hall": {
+            "area_motion": false
+        },
+
+        "entry": {
+            "area_motion": false,
+            "temperature": 21.0
+        },
+
+        "kitchen": {
+            "area_motion": false,
+            "fridge_motion": false,
+            "freezer_motion": false
+        }
+
+    }
+}

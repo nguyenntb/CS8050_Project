@@ -1,0 +1,83 @@
+{
+    "diningroom": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    },
+
+    "livingroom": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        },
+
+        "lamp": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        },
+
+        "tv": {
+            "type": "tv",
+            "on": false,
+            "channel": 1,
+            "volume": 10
+        },
+
+
+        "thermostat": {
+            "type": "thermostat",
+            "setting": 68
+        },
+
+        "speaker": {
+            "type": "speaker",
+            "on": false,
+            "volume": 10
+        }
+
+    },
+
+    "bedroom": {
+        "overhead_light": {
+        "type": "light",
+        "on": false,
+        "brightness": 0
+        }
+    },
+
+    "kitchen": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }    
+    },
+
+    "hall": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    },
+
+    "entry": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    },
+
+    "bath": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    }
+}

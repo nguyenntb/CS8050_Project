@@ -1,0 +1,48 @@
+[
+    {"id":1,"category":"Ambient Temperature","type":"immediate","command":"make it less chilly in here"},
+    {"id":2,"category":"Ambient Temperature","type":"immediate","command":"help me cool off"},
+    {"id":3,"category":"Ambient Temperature","type":"immediate","command":"make it less stuffy in here"},
+    {"id":4,"category":"Ambient Temperature","type":"persistent","command":"turn the AC off when it's cold outside"},
+    {"id":5,"category":"Ambient Temperature","type":"persistent","command":"turn the heat off when it's hot outside"},
+    {"id":6,"category":"Ambient Temperature","type":"persistent","command":"make it comfortable at night"},
+
+    {"id":7,"category":"Ambient Luminance","type":"immediate","command":"make it less bright"},
+    {"id":8,"category":"Ambient Luminance","type":"immediate","command":"get ready for bed"},
+    {"id":9,"category":"Ambient Luminance","type":"immediate","command":"help me see better"},
+    {"id":10,"category":"Ambient Luminance","type":"persistent","command":"keep it well-lit after sundown"},
+    {"id":11,"category":"Ambient Luminance","type":"persistent","command":"use natural light once the sun is up"},
+    {"id":12,"category":"Ambient Luminance","type":"persistent","command":"keep the lights off when I'm gone"},
+
+    {"id":13,"category":"Security","type":"immediate","command":"check the front door"},
+    {"id":14,"category":"Security","type":"immediate","command":"lock up"},
+    {"id":15,"category":"Security","type":"immediate","command":"let the guest in"},
+    {"id":16,"category":"Security","type":"persistent","command":"lock the door when I leave"},
+    {"id":17,"category":"Security","type":"persistent","command":"let me know when there's a visitor"},
+    {"id":18,"category":"Security","type":"persistent","command":"keep the home safe during the day"},
+
+    {"id":19,"category":"Energy Saving","type":"persistent","command":"turn off the thermostat when I don't need it"},
+    {"id":20,"category":"Energy Saving","type":"persistent","command":"save energy when I'm gone"},
+    {"id":21,"category":"Energy Saving","type":"persistent","command":"help me save energy"},
+    {"id":22,"category":"Energy Saving","type":"persistent","command":"help me lower my power bill"},
+
+    {"id":23,"category":"Ambient Atmosphere","type":"immediate","command":"set up for a party"},
+    {"id":24,"category":"Ambient Atmosphere","type":"immediate","command":"make it cozy in here"},
+    {"id":25,"category":"Ambient Atmosphere","type":"immediate","command":"help me wind down"},
+    {"id":26,"category":"Ambient Atmosphere","type":"persistent","command":"make it cozy when it rains"},
+    {"id":27,"category":"Ambient Atmosphere","type":"persistent","command":"let me know when the weather is bad"},
+    {"id":28,"category":"Ambient Atmosphere","type":"persistent","command":"help me sleep better"},
+
+    {"id":29,"category":"Robot Control","type":"immediate","command":"clean up the bedroom"},
+    {"id":30,"category":"Robot Control","type":"immediate","command":"stop cleaning"},
+    {"id":31,"category":"Robot Control","type":"immediate","command":"tidy up the house"},
+    {"id":32,"category":"Robot Control","type":"persistent","command":"stop cleaning after sunset"},
+    {"id":33,"category":"Robot Control","type":"persistent","command":"don't clean when people are here"},
+    {"id":34,"category":"Robot Control","type":"persistent","command":"clean up while I'm gone"},
+
+    {"id":35,"category":"Other Appliances","type":"immediate","command":"give me some privacy"},
+    {"id":36,"category":"Other Appliances","type":"immediate","command":"let some sun in"},
+    {"id":37,"category":"Other Appliances","type":"immediate","command":"finish the coffee"},
+    {"id":38,"category":"Other Appliances","type":"persistent","command":"keep it humid at night"},
+    {"id":39,"category":"Other Appliances","type":"persistent","command":"I need coffee in the morning"},
+    {"id":40,"category":"Other Appliances","type":"persistent","command":"let some sun in if the weather is nice"}
+]

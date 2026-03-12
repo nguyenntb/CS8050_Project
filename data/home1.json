@@ -1,0 +1,63 @@
+{
+    "diningroom": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    },
+
+    "livingroom": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        },
+
+        "lamp": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    },
+
+    "bedroom": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    },
+
+    "kitchen": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    },
+
+    "hall": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    },
+
+    "entry": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    },
+
+    "bath": {
+        "overhead_light": {
+            "type": "light",
+            "on": false,
+            "brightness": 0
+        }
+    }
+}
