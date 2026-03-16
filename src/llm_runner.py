@@ -17,8 +17,10 @@ def run_llm(prompt):
         messages=[ 
             {"role": "user", "content": prompt} 
         ], 
-        temperature=0.2, 
-        max_tokens=300 
+        temperature=0.1, 
+        top_p = 0.9,   
+        max_tokens = 400,
+        stop=["END_JSON"]
     ) 
     
     response = completion.choices[0].message.content 

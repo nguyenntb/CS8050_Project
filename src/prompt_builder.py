@@ -2,6 +2,7 @@ import json
 import textwrap
 
 
+
 def build_prompt(command, devices, sensors):
     """
     Build the correct prompt depending on goal.
@@ -17,7 +18,7 @@ def build_prompt(command, devices, sensors):
 def build_immediate_prompt(command_text, devices):
     """
     Prompt for immediate goal.
-    Immediate prompts produce action plans that can be execuated immediately.
+    Immediate prompts produce action plans that can be executed immediately.
     """
 
     devices_json = json.dumps(devices, indent=2)
@@ -33,42 +34,51 @@ User command:
 Available devices:
 {devices_json}
 
+
 Instructions:
-- Only use devices that exist in the device list.
-- Do not invent devices.
-- Return ONLY the response in the format specified below.
-- Do not add any additional text outside the specified sections.
-- Devices must always be nested inside their room.
+1. Only include devices that CHANGE because of the command.
+2. DO NOT include devices that remain unchanged.
+3. DO NOT output every device in the home.
+4. JSON must be valid and fully closed.
+5. Do not invent devices.
+6. Use BEGIN_JSON and END_JSON exactly.
 
-Correct format:
-devices -> room -> device -> settings
-
-Your response must contain TWO parts:
-
-1) A natural language response to the user.
-
-2) A JSON action plan for the smart home system.
-
-Format:
-
-TEXT_RESPONSE
-<your message to the user>
-END_TEXT
-
-If there are devices relevant to the user command, respond exactly in the format:
+JSON SCHEMA:
 
 BEGIN_JSON
 {{
-    "status": "success",
-    "devices": {{}},
-    "explanation": "Explain briefly why these devices satisfy the command."
+  "status": "success",
+  "devices": {{
+      "<room>": {{
+          "<device>": {{
+          }}
+      }}
+  }},
+  "explanation": "<string describing why devices were set this way>"
 }}
 END_JSON
 
-If no relevant devices exist, respond exactly in the format:
+Your response must contain TWO parts:
+
+1) A natural language response to the user in the following format:
+TEXT_RESPONSE
+<message>
+END_TEXT
+
+2) A JSON action plan for the smart home system. You MUST follow the exact JASON SCHEMA template above.
 
 BEGIN_JSON
-{{ "status": "failure" }}
+<your JSON matching the schema above>
+END_JSON
+
+If no device can perform the action:
+
+TEXT_RESPONSE
+Sorry, I cannot perform that action with the available devices.
+END_TEXT
+
+BEGIN_JSON
+{{"status":"failure"}}
 END_JSON
 """
 
@@ -77,65 +87,75 @@ END_JSON
 
 def build_persistent_prompt(command_text, devices, sensors):
     """
-    Prompt for persistent goal.
-    Persistent prompts produce automation routines.
+    Build a persistent prompt for automation routines with compact JSON output.
     """
 
-    devices_json = json.dumps(devices, indent=2)
-    sensors_json = json.dumps(sensors, indent=2)
+    # Use compact JSON for available devices and sensors
+    devices_json = json.dumps(devices, separators=(',', ':'))
+    sensors_json = json.dumps(sensors, separators=(',', ':'))
 
     prompt = f"""
-You are an AI that controls a smart home.
-
-You receive a user command and create an automation routine in response.
+You are an AI that controls a smart home and creates automation routines from user commands.
 
 User command:
 {command_text}
 
-Available devices:
+Available devices (only use affected devices):
 {devices_json}
 
 Available sensors:
 {sensors_json}
 
 Instructions:
-- Only use devices listed in the devices JSON.
-- Only use sensors listed in the sensors JSON.
-- Do not invent devices or sensors.
-- Return ONLY the response in the format specified below.
-- Do not add any additional text outside the specified sections.
-- Devices must always be nested inside their room.
+1. Only include devices that CHANGE because of the command.
+2. DO NOT include devices that remain unchanged.
+3. DO NOT output every device in the home.
+4. JSON must be valid and fully closed.
+5. Do not invent devices or sensors.
+6. Use BEGIN_JSON and END_JSON exactly.
 
-Correct format:
-devices -> room -> device -> settings
-
-Your response must contain TWO parts:
-
-1) A natural language response to the user. The response must be exactly in the format:
-
-TEXT_RESPONSE
-<your message to the user>
-END_TEXT
-
-2) A JSON action plan for the smart home system.
-
-If there are devices relevant to the user command, response with a JSON object that 
-describes a sensor trigger and how you would change the devices based on that trigger.
-Respond exactly in the format:
+JSON SCHEMA:
 
 BEGIN_JSON
 {{
-    "status": "success",
-    "trigger": {{}},
-    "devices": {{}},
-    "explanation": "Explain briefly why these devices satisfy the command."
+  "status": "success",
+  "trigger": {{
+      "<room>": {{
+          "<sensor>": true | false
+      }}
+  }},
+  "devices": {{
+      "<room>": {{
+          "<device>": {{
+            "<setting>":<value>
+          }}
+      }}
+  }},
+  "explanation": "<string describing why these devices were set this way>"
 }}
 END_JSON
 
-If there are no devices relevant to the user command, respond exactly in the format:
+Your response must contain TWO parts:
+
+1) A natural language response to the user in the following format:
+TEXT_RESPONSE
+<your human-readable message explaining the automation>
+END_TEXT
+
+2) A JSON action plan for the smart home system. You MUST follow the exact JASON SCHEMA template above.
 
 BEGIN_JSON
-{{ "status": "failure" }}
+<your JSON matching the compact schema above>
+END_JSON
+
+If no device can perform the action:
+
+TEXT_RESPONSE
+Sorry, I cannot perform that action with the available devices.
+END_TEXT
+
+BEGIN_JSON
+{{"status":"failure"}}
 END_JSON
 """
 

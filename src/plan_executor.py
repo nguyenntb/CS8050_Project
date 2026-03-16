@@ -1,32 +1,51 @@
 import json
 import re
 
-def parse_text_response(llm_output):
-    """
-    Extract the assistant message before BEGIN_JSON.
-    """
+def parse_text_response(response):
 
-    parts = llm_output.split("BEGIN_JSON")
+    match = re.search(r"TEXT_RESPONSE\s*(.*?)\s*END_TEXT", response, re.S)
 
-    if len(parts) == 0:
-        return ""
+    if match:
+        return match.group(1).strip()
 
-    return parts[0].strip()
+    return None
 
-def parse_action_plan(llm_output):
-    """
-    Extract JSON action plan between BEGIN_JSON and END_JSON.
-    """
+def balance_braces(text):
+    open_braces = text.count("{")
+    close_braces = text.count("}")
 
-    pattern = r"BEGIN_JSON\s*(.*?)\s*END_JSON"
-    match = re.search(pattern, llm_output, re.DOTALL)
+    if close_braces < open_braces:
+        text += "}" * (open_braces - close_braces)
 
-    if not match:
-        return None
+    return text
 
-    json_str = match.group(1)
+def parse_action_plan(response):
 
-    return json.loads(json_str)
+    match = re.search(
+        r"BEGIN_JSON\s*(\{.*)",
+        response,
+        re.DOTALL
+    )
+
+    if match:
+        json_text = match.group(1)
+
+        # remove END_JSON if present
+        json_text = re.sub(r"END_JSON.*", "", json_text)
+
+        # fix trailing commas
+        json_text = re.sub(r",\s*}", "}", json_text)
+        json_text = re.sub(r",\s*]", "]", json_text)
+
+        # auto-close braces
+        json_text = balance_braces(json_text)
+
+        try:
+            return json.loads(json_text)
+        except json.JSONDecodeError as e:
+            print("JSON parse error:", e)
+
+    return None
 
 
 def validate_action_plan(home, action_plan):
@@ -51,16 +70,19 @@ def validate_action_plan(home, action_plan):
     return True
 
 
-def execute_plan(home, action_plan):
-    """
-    Apply device changes directly to the devices JSON.
-    """
+def execute_plan(devices, action_plan):
 
-    device_updates = action_plan.get("devices", {})
+    device_actions = action_plan.get("devices", {})
 
-    for room, devices in device_updates.items():
+    for room, devs in device_actions.items():
 
-        for device, settings in devices.items():
+        if room not in devices:
+            continue
+
+        for device, settings in devs.items():
+
+            if device not in devices[room]:
+                continue
 
             for key, value in settings.items():
-                home[room][device][key] = value
+                devices[room][device][key] = value

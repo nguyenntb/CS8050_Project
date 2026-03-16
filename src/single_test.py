@@ -1,7 +1,10 @@
 import json
 import random
+from urllib import response
 
-from prompt_builder import build_prompt
+from prompt_builder_improved import build_prompt
+#from prompt_builder import build_prompt
+
 from llm_runner import run_llm
 from plan_executor import (
     parse_text_response,
@@ -10,71 +13,122 @@ from plan_executor import (
     execute_plan
 )
 
+
+# ------------------------------------------------
+# Utilities
+# ------------------------------------------------
+
 def load_json(path):
-    with open(path, "r") as f:
-        return json.load(f)
-
-def main():   
-
-    # ----------------------------
-    # Load data
-    # ----------------------------
-    devices = load_json("data/home3.json")
-    sensors = load_json("data/sensors.json")
-    commands = load_json("data/commands.json")
+    """Load JSON file."""
+    try:
+        with open(path, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"Error loading {path}: {e}")
+        return None
 
 
-    # ----------------------------
-    # Pick one command
-    # ----------------------------
-    command = random.choice(commands)
+def print_section(title):
+    print("\n" + "=" * 40)
+    print(title)
+    print("=" * 40)
 
-    print("Command:")
+
+# ------------------------------------------------
+# Main Pipeline
+# ------------------------------------------------
+
+def run_command(command, devices, sensors):
+
+    print_section("COMMAND")
     print(command["command"])
-    print("Command type:", command["type"])
-    print()
+    print("Type:", command["type"])
 
-    # ----------------------------
+    # --------------------------------------------
     # Build prompt
-    # ----------------------------
+    # --------------------------------------------
     prompt = build_prompt(command, devices, sensors)
 
-    # ----------------------------
+    # --------------------------------------------
     # Run LLM
-    # ----------------------------
+    # --------------------------------------------
     response = run_llm(prompt)
 
-    print("\nLLM OUTPUT")
-    print("-----------------------------------")
-    print(response)
-    print("-----------------------------------")
+    #print_section("LLM OUTPUT")
+    #print(response)
 
+    # --------------------------------------------
+    # Parse response
+    # --------------------------------------------
     text_response = parse_text_response(response)
 
-    print("\nSASHA:")
+    print_section("SASHA")
     print(text_response)
 
     action_plan = parse_action_plan(response)
+
     if action_plan is None:
-        print("Could not parse action plan.")
+        print("\n❌ Could not parse action plan.")
         return
-    
-    print("\nACTION PLAN")
-    print(action_plan)
-    
+
+    print_section("ACTION PLAN")
+    print(json.dumps(action_plan, indent=2))
+
+    # --------------------------------------------
+    # Handle failure
+    # --------------------------------------------
     if action_plan["status"] == "failure":
-        print("\nCommand rejected by LLM.")
+        print("\n⚠️ Command rejected by LLM.")
         return
 
+    # --------------------------------------------
+    # Validate devices
+    # --------------------------------------------
     if not validate_action_plan(devices, action_plan):
-        print("\nInvalid action plan (device does not exist).")
+        print("\n❌ Invalid action plan (device does not exist).")
         return
 
-    execute_plan(devices, action_plan)
+    # --------------------------------------------
+    # Execute plan
+    # --------------------------------------------
+    #execute_plan(devices, action_plan)
 
-    print("\nUPDATED DEVICES STATE")
-    print(json.dumps(devices, indent=2))
-    
+    #print_section("UPDATED DEVICES STATE")
+    #print(json.dumps(devices, indent=2))
+
+
+# ------------------------------------------------
+# Entry Point
+# ------------------------------------------------
+
+def main():
+
+    # --------------------------------------------
+    # Load data
+    # --------------------------------------------
+    devices = load_json("data/home1.json")
+    sensors = load_json("data/sensors.json")
+    commands = load_json("data/commands.json")
+
+    if not devices or not sensors or not commands:
+        print("Error loading data files.")
+        return
+
+    # --------------------------------------------
+    # Select command
+    # --------------------------------------------
+
+    # Random test
+    # command = random.choice(commands)
+
+    # Fixed test
+    command = commands[32]
+
+    # --------------------------------------------
+    # Run pipeline
+    # --------------------------------------------
+    run_command(command, devices, sensors)
+
 
 if __name__ == "__main__":
     main()
