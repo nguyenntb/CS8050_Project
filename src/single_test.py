@@ -122,7 +122,7 @@ def main():
     # command = random.choice(commands)
 
     # Fixed test
-    command = commands[32]
+    command = commands[0]
 
     # --------------------------------------------
     # Run pipeline
