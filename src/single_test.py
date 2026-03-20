@@ -2,6 +2,8 @@ import json
 import random
 from urllib import response
 
+import sys
+
 from prompt_builder_improved import build_prompt
 #from prompt_builder import build_prompt
 
@@ -123,6 +125,21 @@ def main():
 
     # Random test
     # command = random.choice(commands)
+
+    # --------------------------------------------
+    # Check for command index from CLI
+    # --------------------------------------------
+    if len(sys.argv) > 1:
+        try:
+            command_index = int(sys.argv[1])
+        except ValueError:
+            print(f"Invalid command index '{sys.argv[1]}', using 0")
+            command_index = 0
+
+    # Ensure index is in range
+    if command_index < 0 or command_index >= len(commands):
+        print(f"Index {command_index} out of range, using 0")
+        command_index = 0
 
     # Fixed test
     command = commands[command_index]
