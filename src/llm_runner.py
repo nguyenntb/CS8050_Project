@@ -22,10 +22,9 @@ model = AutoModelForCausalLM.from_pretrained(
 
 
 def run_llm(prompt):
-    # format prompt to activate the instruction-following behavior
-    formatted_prompt = f"<|user|>\n{prompt}\n<|assistant|>"
-
-    inputs = tokenizer(formatted_prompt, return_tensors="pt").to(model.device)
+    inputs = [
+        {"role": "user", "content": prompt}
+    ]
 
     outputs = model.generate(
         **inputs,
