@@ -22,9 +22,15 @@ model = AutoModelForCausalLM.from_pretrained(
 
 
 def run_llm(prompt):
-    inputs = [
-        {"role": "user", "content": prompt}
-    ]
+    messages = [ 
+            {"role": "user", "content": prompt} 
+        ]
+    
+    inputs = tokenizer.apply_chat_template(
+        messages,
+        return_tensors="pt",
+        add_generation_prompt=True
+    ).to(model.device)
 
     outputs = model.generate(
         **inputs,
@@ -32,10 +38,13 @@ def run_llm(prompt):
         do_sample=True,
         temperature=0.1,
         top_p=0.9,
-        eos_token_id=tokenizer.eos_token_id
+        eos_token_id=tokenizer.eos_token_id,
+        stop=["END_JSON"]
     )
 
-    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    generated_tokens = outputs[0][inputs.shape[1]:]
+
+    response = tokenizer.decode(generated_tokens, skip_special_tokens=True)
 
     if "END_JSON" in response:
         response = response.split("END_JSON")[0] + "END_JSON"
