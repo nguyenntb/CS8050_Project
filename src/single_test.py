@@ -54,8 +54,8 @@ def run_command(command, devices, sensors):
     # --------------------------------------------
     response = run_llm(prompt)
 
-    #print_section("LLM OUTPUT")
-    #print(response)
+    print_section("LLM OUTPUT")
+    print(response)
 
     # --------------------------------------------
     # Parse response
