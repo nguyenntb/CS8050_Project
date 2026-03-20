@@ -41,7 +41,8 @@ def run_llm(prompt):
         eos_token_id=tokenizer.eos_token_id
     )
 
-    generated_tokens = outputs[0][inputs.shape[1]:]
+    input_length = inputs["input_ids"].shape[1]
+    generated_tokens = outputs[0][input_length:]
 
     response = tokenizer.decode(generated_tokens, skip_special_tokens=True)
 
