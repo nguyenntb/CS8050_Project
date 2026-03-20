@@ -1,16 +1,23 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 import torch
 
 torch.manual_seed(42)
 
 MODEL_NAME = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+#MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
+
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype=torch.float16
+)
+
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_NAME,
     device_map="auto",
-    load_in_4bit=True
+    quantization_config=bnb_config
 )
 
 
