@@ -38,8 +38,7 @@ def run_llm(prompt):
         do_sample=True,
         temperature=0.1,
         top_p=0.9,
-        eos_token_id=tokenizer.eos_token_id,
-        stop=["END_JSON"]
+        eos_token_id=tokenizer.eos_token_id
     )
 
     generated_tokens = outputs[0][inputs.shape[1]:]
