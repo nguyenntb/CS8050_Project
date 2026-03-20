@@ -65,7 +65,7 @@ Intructions:
 - ONLY use devices from the inventory above. Do not invent devices.
 - Only include devices that CHANGE because of the command. DO NOT include devices that remain unchanged.
 - TEXT_RESPONSE must mention the devices used.
-- JSON must be valid, fully closed and contain NO trailing commas..
+- JSON must be valid, fully closed and contain NO trailing commas.
 - Use BEGIN_JSON and END_JSON exactly.
 - If no listed device can achieve the goal, return failure.
 

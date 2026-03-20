@@ -1,5 +1,8 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, logging
 import torch
+
+
+logging.set_verbosity_error()  
 
 torch.manual_seed(42)
 
@@ -35,10 +38,11 @@ def run_llm(prompt):
     outputs = model.generate(
         **inputs,
         max_new_tokens=400,
-        do_sample=True,
-        temperature=0.1,
-        top_p=0.9,
-        eos_token_id=tokenizer.eos_token_id
+        do_sample=False,
+        temperature=0.0,
+        top_p=1.0,
+        eos_token_id=tokenizer.eos_token_id,
+        pad_token_id=tokenizer.eos_token_id 
     )
 
     input_length = inputs["input_ids"].shape[1]
