@@ -1,29 +1,30 @@
-from openai import OpenAI 
+from transformers import AutoTokenizer, AutoModelForCausalLM
+import torch
 
-client = OpenAI( 
-    base_url="http://10.0.0.159:1234/v1", 
-    api_key="lm-studio" 
+torch.manual_seed(42)
+
+MODEL_NAME = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+
+model = AutoModelForCausalLM.from_pretrained(
+    MODEL_NAME,
+    device_map="auto",
+    load_in_4bit=True
 )
 
-MODEL_NAME = "meta-llama-3.1-8b-instruct"
 
 def run_llm(prompt):
-    """ 
-    Sends a prompt to the local LM Studio model and returns the response text. 
-    """
+    formatted_prompt = f"<|user|>\n{prompt}\n<|assistant|>"
 
-    completion = client.chat.completions.create( 
-        model=MODEL_NAME, 
-        messages=[ 
-            {"role": "user", "content": prompt} 
-        ], 
-        temperature=0.1, 
-        top_p = 0.9,   
-        max_tokens = 400,
-        seed = 42,
-        stop=["END_JSON"]
-    ) 
-    
-    response = completion.choices[0].message.content 
-    
-    return response
+    inputs = tokenizer(formatted_prompt, return_tensors="pt").to(model.device)
+
+    outputs = model.generate(
+        **inputs,
+        max_new_tokens=400,
+        temperature=0,
+        do_sample=False
+    )
+
+    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    return response.split("<|assistant|>")[-1].strip()
