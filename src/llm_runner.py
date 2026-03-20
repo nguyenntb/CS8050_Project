@@ -20,6 +20,7 @@ def run_llm(prompt):
         temperature=0.1, 
         top_p = 0.9,   
         max_tokens = 400,
+        seed = 42,
         stop=["END_JSON"]
     ) 
     

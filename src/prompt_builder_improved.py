@@ -6,7 +6,7 @@ DEVICE_CAPABILITIES = """
 Device settings reference:
 light -> {"on": true/false, "brightness": 0-100}
 curtains -> {"open": true/false}
-thermostat -> {"setting": temperature}
+thermostat -> {"temperature": 65-80}
 speaker -> {"on": true/false, "volume": 0-100}
 tv -> {"on": true/false, "channel": number, "volume": 0-100}
 vacuum -> {"on": true/false}
@@ -99,6 +99,17 @@ BEGIN_JSON
 <your JSON matching the schema above>
 END_JSON
 
+Example (user turns on a lamp):
+
+TEXT_RESPONSE
+The living room lamp has been turned on.
+END_TEXT
+
+BEGIN_JSON
+{{"status":"success","devices":{{"livingroom":{{"lamp":{{"on":true,"brightness":100}}}}}},"explanation":"Lamp turned on."}}
+END_JSON
+
+
 If no device can perform the action:
 
 TEXT_RESPONSE
@@ -177,6 +188,17 @@ END_TEXT
 BEGIN_JSON
 <your JSON matching the compact schema above>
 END_JSON
+
+Example automation:
+
+TEXT_RESPONSE
+Lights will turn off when motion is detected.
+END_TEXT
+
+BEGIN_JSON
+{{"status":"success","trigger":{{"livingroom":{{"motion":true}}}},"devices":{{"livingroom":{{"lamp":{{"on":false,"brightness":0}}}}}},"explanation":"Turn off lamp when motion detected."}}
+END_JSON
+
 
 If no device can perform the action:
 

@@ -68,7 +68,7 @@ def run_command(command, devices, sensors):
     action_plan = parse_action_plan(response)
 
     if action_plan is None:
-        print("\n❌ Could not parse action plan.")
+        print("\n Could not parse action plan.")
         return
 
     print_section("ACTION PLAN")
@@ -78,14 +78,14 @@ def run_command(command, devices, sensors):
     # Handle failure
     # --------------------------------------------
     if action_plan["status"] == "failure":
-        print("\n⚠️ Command rejected by LLM.")
+        print("\n Command rejected by LLM.")
         return
 
     # --------------------------------------------
     # Validate devices
     # --------------------------------------------
     if not validate_action_plan(devices, action_plan):
-        print("\n❌ Invalid action plan (device does not exist).")
+        print("\n Invalid action plan (device does not exist).")
         return
 
     # --------------------------------------------

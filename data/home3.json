@@ -30,7 +30,7 @@
 
         "thermostat": {
             "type": "thermostat",
-            "setting": 68
+            "temperature": 68
         },
 
         "speaker": {
