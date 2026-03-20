@@ -22,7 +22,8 @@ def balance_braces(text):
 def parse_action_plan(response):
 
     match = re.search(
-        r"BEGIN_JSON\s*(\{.*)",
+        #r"BEGIN_JSON\s*(\{.*)",
+        r"BEGIN_JSON\s*(\{.*?\})\s*END_JSON",
         response,
         re.DOTALL
     )

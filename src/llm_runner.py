@@ -22,6 +22,7 @@ model = AutoModelForCausalLM.from_pretrained(
 
 
 def run_llm(prompt):
+    # format prompt to activate the instruction-following behavior
     formatted_prompt = f"<|user|>\n{prompt}\n<|assistant|>"
 
     inputs = tokenizer(formatted_prompt, return_tensors="pt").to(model.device)
@@ -29,9 +30,15 @@ def run_llm(prompt):
     outputs = model.generate(
         **inputs,
         max_new_tokens=400,
-        temperature=0,
-        do_sample=False
+        do_sample=True,
+        temperature=0.1,
+        top_p=0.9,
+        eos_token_id=tokenizer.eos_token_id
     )
 
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    return response.split("<|assistant|>")[-1].strip()
+
+    if "END_JSON" in response:
+        response = response.split("END_JSON")[0] + "END_JSON"
+
+    return response
