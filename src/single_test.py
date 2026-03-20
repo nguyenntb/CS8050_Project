@@ -102,11 +102,14 @@ def run_command(command, devices, sensors):
 # ------------------------------------------------
 
 def main():
+    # default values
+    command_index = 0
+    home_file = "data/home1.json"
 
     # --------------------------------------------
     # Load data
     # --------------------------------------------
-    devices = load_json("data/home1.json")
+    devices = load_json(home_file)
     sensors = load_json("data/sensors.json")
     commands = load_json("data/commands.json")
 
@@ -122,7 +125,7 @@ def main():
     # command = random.choice(commands)
 
     # Fixed test
-    command = commands[0]
+    command = commands[command_index]
 
     # --------------------------------------------
     # Run pipeline
