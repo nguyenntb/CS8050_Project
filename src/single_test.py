@@ -98,7 +98,6 @@ def run_command(command, devices, sensors):
     #print_section("UPDATED DEVICES STATE")
     #print(json.dumps(devices, indent=2))
 
-
 # ------------------------------------------------
 # Entry Point
 # ------------------------------------------------
