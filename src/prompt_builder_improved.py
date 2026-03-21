@@ -109,7 +109,8 @@ Strictly follow these intructions:
 use thermostat to change temperature.
 - If a device is not listed, it DOES NOT EXIST. Do not invent devices.
 - If the room does NOT have the device, do not add devices to the room.
-- If multiple devices help, include them.
+- Triggers MUST use ONLY sensors listed above. Do not invent sensors.
+- If multiple devices/sensors help, include them.
 - Only include devices and the room they are in in the JSON action plan. 
 DO NOT include devices that remain unchanged.
 - JSON must be valid, fully closed and contain NO trailing commas.
