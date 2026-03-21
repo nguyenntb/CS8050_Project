@@ -107,6 +107,8 @@ END_JSON
 
 Strictly follow these intructions:
 - If a device is not listed, it DOES NOT EXIST. Do not invent devices.
+- Only use the devices that can meet the user's intended goal. For example, use robot vacumn to clean, 
+use thermostat to change temperature.
 - Only include devices that CHANGE because of the command in the JSON action plan. 
 DO NOT include devices that remain unchanged.
 - JSON must be valid, fully closed and contain NO trailing commas.
