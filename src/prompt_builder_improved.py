@@ -47,13 +47,21 @@ def build_immediate_prompt(command_text, devices):
     inventory = build_device_inventory(devices)
 
     prompt = f"""
-You are an AI that controls a smart home with the following devices:
+You are an AI that controls a smart home with ONLY the following devices:
 {devices}
 
 You receive a user command and assign settings to devices in response.
 Command:
 {command_text}
 
+Strictly follow these intructions:
+- Only use the devices that can meet the user's intended goal. For example, use robot vacumn to clean, 
+use thermostat to change temperature.
+- If a device is not listed, it DOES NOT EXIST. Do not invent devices.
+- Only include devices that CHANGE because of the command in the JSON action plan. 
+DO NOT include devices that remain unchanged.
+- JSON must be valid, fully closed and contain NO trailing commas.
+- If no listed device can achieve the goal, return failure.
 
 Your response must contain TWO parts:
 
@@ -105,14 +113,7 @@ BEGIN_JSON
 END_JSON
 
 
-Strictly follow these intructions:
-- If a device is not listed, it DOES NOT EXIST. Do not invent devices.
-- Only use the devices that can meet the user's intended goal. For example, use robot vacumn to clean, 
-use thermostat to change temperature.
-- Only include devices that CHANGE because of the command in the JSON action plan. 
-DO NOT include devices that remain unchanged.
-- JSON must be valid, fully closed and contain NO trailing commas.
-- If no listed device can achieve the goal, return failure.
+
 
 
 """
