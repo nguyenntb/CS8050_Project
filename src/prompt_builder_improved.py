@@ -47,29 +47,26 @@ def build_immediate_prompt(command_text, devices):
     inventory = build_device_inventory(devices)
 
     prompt = f"""
-You are an AI that controls a smart home.
+You are an AI that controls a smart home with the following devices:
+{devices}
 
 You receive a user command and assign settings to devices in response.
 Command:
 {command_text}
 
-Device inventory (ONLY these devices exist in the home):
-{inventory}
 
-{DEVICE_CAPABILITIES}
+Your response must contain TWO parts:
 
-Intructions:
-- Identify the user's goal.
-- Choose devices that help achieve the goal.
-- If multiple devices help, include them.
-- ONLY use devices from the inventory above. Do not invent devices.
-- Only include devices that CHANGE because of the command. DO NOT include devices that remain unchanged.
-- TEXT_RESPONSE must mention the devices used.
-- JSON must be valid, fully closed and contain NO trailing commas.
-- Use BEGIN_JSON and END_JSON exactly.
-- If no listed device can achieve the goal, return failure.
+1) A natural language response to the user in the following format:
+TEXT_RESPONSE
+<message>
+END_TEXT
 
-Reason internally about the goal and devices before answering.
+2) A JSON action plan for the smart home system. You MUST follow the exact JASON SCHEMA template.
+
+BEGIN_JSON
+<your JSON matching the specified schema>
+END_JSON
 
 JSON SCHEMA:
 
@@ -86,20 +83,7 @@ BEGIN_JSON
 }}
 END_JSON
 
-Your response must contain TWO parts:
-
-1) A natural language response to the user in the following format:
-TEXT_RESPONSE
-<message>
-END_TEXT
-
-2) A JSON action plan for the smart home system. You MUST follow the exact JASON SCHEMA template above.
-
-BEGIN_JSON
-<your JSON matching the schema above>
-END_JSON
-
-Example (user turns on a lamp):
+An Example (user turns on a lamp):
 
 TEXT_RESPONSE
 The living room lamp has been turned on.
@@ -119,6 +103,16 @@ END_TEXT
 BEGIN_JSON
 {{"status":"failure"}}
 END_JSON
+
+
+Strictly follow these intructions:
+- If a device is not listed, it DOES NOT EXIST. Do not invent devices.
+- Only include devices that CHANGE because of the command in the JSON action plan. 
+DO NOT include devices that remain unchanged.
+- JSON must be valid, fully closed and contain NO trailing commas.
+- If no listed device can achieve the goal, return failure.
+
+
 """
 
     return textwrap.dedent(prompt)
