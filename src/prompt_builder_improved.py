@@ -140,7 +140,7 @@ BEGIN_JSON
   "status": "success",
   "trigger": {{
       "<room>": {{
-          "<sensor>": true | false
+          "<sensor>": <value>
       }}
   }},
   "devices": {{
