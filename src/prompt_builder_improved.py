@@ -62,7 +62,8 @@ use thermostat to change temperature.
 - Only include devices and the room they are in in the JSON action plan. 
 DO NOT include devices that remain unchanged.
 - JSON must be valid, fully closed and contain NO trailing commas.
-- If no listed device can achieve the goal, return failure.
+- If no listed device can achieve the goal, return failure. Do not force other devices to perform functions
+that they are not supposed to do.
 
 Your response must contain TWO parts:
 
