@@ -8,6 +8,10 @@ from llm_runner import run_llm
 
 MODEL_TAG = "llama"   # change to "qwen"
 OUTPUT_FILE = "/content/drive/MyDrive/llm_results/results_llama.json"
+#create folder if it doesn't exist
+import os
+os.makedirs("/content/drive/MyDrive/llm_results", exist_ok=True)
+
 def load_json(path):
     with open(path, "r") as f:
         return json.load(f)
