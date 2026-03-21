@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 from prompt_builder_improved import build_prompt
 from llm_runner import run_llm
@@ -55,12 +56,15 @@ def main():
             # ----------------------------------------
             # Run LLM
             # ----------------------------------------
+            start_time = time.time()
             try:
                 prompt = build_prompt(cmd, devices, sensors)
                 response = run_llm(prompt)
 
             except Exception as e:
                 response = f"ERROR: {str(e)}"
+
+            latency = time.time() - start_time
 
             # ----------------------------------------
             # Save results
@@ -69,7 +73,8 @@ def main():
                 "command": cmd["command"],
                 "type": cmd.get("type"),
                 "home": home_name,   # needed for resume correctness
-                "raw_output": response
+                "raw_output": response,
+                "latency": latency
             }
 
             results.append(result)
