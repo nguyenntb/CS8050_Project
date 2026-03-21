@@ -58,7 +58,7 @@ Strictly follow these intructions:
 - Only use the devices that can meet the user's intended goal. For example, use robot vacumn to clean, 
 use thermostat to change temperature.
 - If a device is not listed, it DOES NOT EXIST. Do not invent devices.
-- Only include devices that CHANGE because of the command in the JSON action plan. 
+- Only include devices and the room they are in in the JSON action plan. 
 DO NOT include devices that remain unchanged.
 - JSON must be valid, fully closed and contain NO trailing commas.
 - If no listed device can achieve the goal, return failure.
