@@ -7,8 +7,7 @@ from llm_runner import run_llm
 
 
 MODEL_TAG = "llama"   # change to "qwen"
-OUTPUT_FILE = f"results_{MODEL_TAG}.json"
-
+OUTPUT_FILE = "/content/drive/MyDrive/llm_results/results_llama.json"
 def load_json(path):
     with open(path, "r") as f:
         return json.load(f)
