@@ -2,38 +2,6 @@ import json
 import textwrap
 
 
-DEVICE_CAPABILITIES = """
-Device settings reference:
-light -> {"on": true/false, "brightness": 0-100}
-curtains -> {"open": true/false}
-thermostat -> {"temperature": 65-80}
-speaker -> {"on": true/false, "volume": 0-100}
-tv -> {"on": true/false, "channel": number, "volume": 0-100}
-vacuum -> {"on": true/false}
-humidifier -> {"on": true/false, "humidity": 0-100}
-microwave -> {"on": true/false, "time": seconds}
-lock -> {"locked": true/false}
-camera -> {"on": true/false}
-"""
-
-
-
-
-def build_device_inventory(devices):
-
-    inventory = []
-
-    for room, devs in devices.items():
-        for name, info in devs.items():
-            inventory.append({
-                "room": room,
-                "device": name,
-                "type": info["type"]
-            })
-
-    return json.dumps(inventory, indent=2)
-
-
 def build_prompt(command, devices, sensors):
 
     if command["type"] == "immediate":
@@ -43,8 +11,6 @@ def build_prompt(command, devices, sensors):
 
 
 def build_immediate_prompt(command_text, devices):
-
-    inventory = build_device_inventory(devices)
 
     prompt = f"""
 You are an AI that controls a smart home with ONLY the following devices:
@@ -124,10 +90,6 @@ END_JSON
 
 def build_persistent_prompt(command_text, devices, sensors):
 
-    sensors_json = json.dumps(sensors, indent=2)
-    inventory = build_device_inventory(devices)
-
-
     prompt = f"""
 You are an AI that controls a smart home with ONLY the following devices and sensors:
 
@@ -135,7 +97,7 @@ Devices:
 {devices}
 
 Sensors:
-{sensors_json}
+{sensors}
 
 Your task is to create automation routines from user commands.
 
