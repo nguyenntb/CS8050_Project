@@ -42,7 +42,7 @@ def print_section(title):
 
 def run_command(command, devices, sensors):
 
-    print_section("COMMAND")
+    print_section("USER")
     print(command["command"])
     print("Type:", command["type"])
 
