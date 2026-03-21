@@ -48,6 +48,8 @@ def build_immediate_prompt(command_text, devices):
 
     prompt = f"""
 You are an AI that controls a smart home with ONLY the following devices:
+
+Devices:
 {devices}
 
 You receive a user command and assign settings to devices in response.
@@ -59,6 +61,7 @@ Strictly follow these intructions:
 use thermostat to change temperature.
 - If a device is not listed, it DOES NOT EXIST. Do not invent devices.
 - If the room does NOT have the device, do not add devices to the room.
+- If multiple devices help, include them.
 - Only include devices and the room they are in in the JSON action plan. 
 DO NOT include devices that remain unchanged.
 - JSON must be valid, fully closed and contain NO trailing commas.
@@ -72,11 +75,13 @@ TEXT_RESPONSE
 <message>
 END_TEXT
 
-2) A JSON action plan for the smart home system. You MUST follow the exact JASON SCHEMA template.
+2) A JSON action plan for the smart home system. 
 
 BEGIN_JSON
-<your JSON matching the specified schema>
+<your JSON matching the template>
 END_JSON
+
+You MUST follow the exact JASON SCHEMA template.
 
 JSON SCHEMA:
 
@@ -103,7 +108,6 @@ BEGIN_JSON
 {{"status":"success","devices":{{"livingroom":{{"lamp":{{"on":true,"brightness":100}}}}}},"explanation":"Lamp turned on."}}
 END_JSON
 
-
 If no device can perform the action:
 
 TEXT_RESPONSE
@@ -113,11 +117,6 @@ END_TEXT
 BEGIN_JSON
 {{"status":"failure"}}
 END_JSON
-
-
-
-
-
 """
 
     return textwrap.dedent(prompt)
@@ -130,30 +129,45 @@ def build_persistent_prompt(command_text, devices, sensors):
 
 
     prompt = f"""
-You are an AI that controls a smart home and creates automation routines from user commands.
+You are an AI that controls a smart home with ONLY the following devices and sensors:
 
-Command:
-{command_text}
+Devices:
+{devices}
 
 Sensors:
 {sensors_json}
 
-Device inventory (ONLY these devices exist in the home):
-{inventory}
+Your task is to create automation routines from user commands.
 
-{DEVICE_CAPABILITIES}
+Command:
+{command_text}
 
-Guidelines:
-- Identify the user's goal.
-- Choose devices that help achieve the goal.
+Strictly follow these intructions:
+- Use devices with its common functions. For example, use robot vacumn to clean, 
+use thermostat to change temperature.
+- If a device is not listed, it DOES NOT EXIST. Do not invent devices.
+- If the room does NOT have the device, do not add devices to the room.
 - If multiple devices help, include them.
-- ONLY use devices from the inventory above. Do not invent devices.
-- Only include devices that CHANGE because of the command. DO NOT include devices that remain unchanged.
-- TEXT_RESPONSE must mention the devices used.
-- JSON must be valid, fully closed and contain NO trailing commas..
-- Use BEGIN_JSON and END_JSON exactly.
-- If no listed device can achieve the goal, return failure.
+- Only include devices and the room they are in in the JSON action plan. 
+DO NOT include devices that remain unchanged.
+- JSON must be valid, fully closed and contain NO trailing commas.
+- If no listed device can achieve the goal, return failure. Do not force other devices to perform functions
+that they are not supposed to do.
 
+Your response must contain TWO parts:
+
+1) A natural language response to the user in the following format:
+TEXT_RESPONSE
+<your human-readable message explaining the automation>
+END_TEXT
+
+2) A JSON action plan for the smart home system. 
+
+BEGIN_JSON
+<your JSON matching the template>
+END_JSON
+
+You MUST follow the exact JASON SCHEMA template below.
 JSON SCHEMA:
 
 BEGIN_JSON
@@ -173,19 +187,6 @@ BEGIN_JSON
   }},
   "explanation": "<string describing why these devices were set this way>"
 }}
-END_JSON
-
-Your response must contain TWO parts:
-
-1) A natural language response to the user in the following format:
-TEXT_RESPONSE
-<your human-readable message explaining the automation>
-END_TEXT
-
-2) A JSON action plan for the smart home system. You MUST follow the exact JASON SCHEMA template above.
-
-BEGIN_JSON
-<your JSON matching the compact schema above>
 END_JSON
 
 Example automation:
