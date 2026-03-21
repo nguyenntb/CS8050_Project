@@ -104,9 +104,21 @@ def run_command(command, devices, sensors):
 # ------------------------------------------------
 
 def main():
-    # default values
+    # Default values
     command_index = 0
     home_file = "data/home1.json"
+
+    # --------------------------------------------
+    # Parse CLI arguments
+    # --------------------------------------------
+    if len(sys.argv) > 1:
+        try:
+            command_index = int(sys.argv[1])
+        except ValueError:
+            print(f"Invalid command index '{sys.argv[1]}', using 0")
+
+    if len(sys.argv) > 2:
+        home_file = sys.argv[2]
 
     # --------------------------------------------
     # Load data
@@ -120,28 +132,12 @@ def main():
         return
 
     # --------------------------------------------
-    # Select command
+    # Validate command index
     # --------------------------------------------
-
-    # Random test
-    # command = random.choice(commands)
-
-    # --------------------------------------------
-    # Check for command index from CLI
-    # --------------------------------------------
-    if len(sys.argv) > 1:
-        try:
-            command_index = int(sys.argv[1])
-        except ValueError:
-            print(f"Invalid command index '{sys.argv[1]}', using 0")
-            command_index = 0
-
-    # Ensure index is in range
     if command_index < 0 or command_index >= len(commands):
         print(f"Index {command_index} out of range, using 0")
         command_index = 0
 
-    # Fixed test
     command = commands[command_index]
 
     # --------------------------------------------
