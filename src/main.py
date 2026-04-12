@@ -6,8 +6,8 @@ from prompt_builder_improved import build_prompt
 from llm_runner import run_llm
 
 
-MODEL_TAG = "llama"   # change to "qwen"
-OUTPUT_FILE = "/content/drive/MyDrive/llm_results/results_llama.json"
+MODEL_TAG = "gwen"   # change to "llama"
+OUTPUT_FILE = "/content/drive/MyDrive/llm_results/results_gwen.json"
 #create folder if it doesn't exist
 import os
 os.makedirs("/content/drive/MyDrive/llm_results", exist_ok=True)
