@@ -5,8 +5,8 @@ import time
 from prompt_builder_improved import build_prompt
 from llm_runner import run_llm
 
-
-MODEL_TAG = "gwen"   # change to "llama"
+# change to "llama", and modify llm_runner.py
+MODEL_TAG = "gwen"   
 OUTPUT_FILE = "/content/drive/MyDrive/llm_results/results_gwen.json"
 #create folder if it doesn't exist
 import os
